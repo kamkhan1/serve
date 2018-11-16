@@ -46,16 +46,26 @@ public class DAO implements IDao{
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	@Override
-	public void show() {
-		//String query=SELEC// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void show() {
+//		  String query = "select something2 from somewhere2";
+//		  try {
+//			PreparedStatement statement=  conn.prepareStatement(query);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} 
+//		  
+//		  
+//		
+//	
+//		
+//	}
 		
 }
