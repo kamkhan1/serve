@@ -8,4 +8,8 @@ public interface IDaoCoord {
 
 	ArrayList<TrainingProgram> trainingMaintenance();
 
+	Boolean validate(int id);
+
+	Boolean validateCID(int id);
+
 }

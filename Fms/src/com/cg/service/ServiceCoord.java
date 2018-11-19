@@ -28,4 +28,16 @@ public class ServiceCoord implements IServiceCoord{
 		
 	}
 
+	@Override
+	public Boolean validate(int id) {
+	
+		return dao.validate(id);
+	}
+
+	@Override
+	public Boolean validateCID(int id) {
+		
+		return dao.validateCID(id);
+	}
+
 }

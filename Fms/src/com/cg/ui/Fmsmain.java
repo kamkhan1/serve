@@ -89,11 +89,23 @@ public class Fmsmain {
 			case 1:
 			{
 				al=coord.trainingMaintenance();
-				//while(al.hasNext()){
+				
 				for(TrainingProgram obj: al){
-					System.out.println("");
+					System.out.println("obj");}
+				Boolean b=false;
+				 int id;
+			    do{
+			    	System.out.println("which one?");
+			    	id=kb.nextInt();
+					b=coord.validate(id);
+			    }while(b==false);
+			    b=false;
+			    do{
+			    System.out.println("enter new course code:");
+			    id=kb.nextInt();
+			    b=coord.validateCID(id);
+			    }while(b==false);
 					
-				}	
 				}
 			
 			case 2:

@@ -11,5 +11,7 @@ public interface IServiceCoord {
 	void paticipantEnrollment();
 
 	void viewFeedback();
+    Boolean validate(int id);
 
+	Boolean validateCID(int id);
 }

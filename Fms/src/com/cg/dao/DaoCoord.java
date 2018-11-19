@@ -43,5 +43,42 @@ public class DaoCoord implements IDaoCoord {
 	}
 	return al;
 	}
+	@Override
+	public Boolean validate(int id) {
+	String query="Select training_code from training_program where training_code=?";
+	ResultSet resultSet=null;
+	try {
+		PreparedStatement stmt=conn.prepareStatement(query);
+		stmt.setInt(1, id);
+		resultSet=stmt.executeQuery();
+	
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+	}	if(resultSet==null)
+	{
+		return false;
+	}
+	else return true;
+		
+	}
+	@Override
+	public Boolean validateCID(int id) {
+		String query="select course_ID from Course_master where Course_ID=?";
+		ResultSet resultSet=null;
+		try {
+			PreparedStatement stmt=conn.prepareStatement(query);
+			stmt.setInt(1, id);
+			resultSet=stmt.executeQuery();
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}	if(resultSet==null)
+		{
+			return false;
+		}
+		else return true;
+	}
 
 }

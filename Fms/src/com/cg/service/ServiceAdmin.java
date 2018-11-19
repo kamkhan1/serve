@@ -1,7 +1,10 @@
 package com.cg.service;
 
-public class ServiceAdmin implements IServiceAdmin{
+import com.cg.dao.DaoAdmin;
+import com.cg.dao.IDaoAdmin;
 
+public class ServiceAdmin implements IServiceAdmin{
+    IDaoAdmin ad= new DaoAdmin();  
 	@Override
 	public void facultySkillMaintenance() {
 		
@@ -19,5 +22,12 @@ public class ServiceAdmin implements IServiceAdmin{
 		
 		
 	}
-
+  Boolean validate(int id)
+  {
+	  if
+	 return ad.validate(id); 
+	  
+	  
+	  
+  }
 }
