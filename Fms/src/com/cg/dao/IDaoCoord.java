@@ -12,4 +12,8 @@ public interface IDaoCoord {
 
 	Boolean validateCID(int id);
 
+	Boolean validateFID(int fId);
+
+	int updateProgram(TrainingProgram trainingProgram);
+
 }

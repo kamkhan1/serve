@@ -14,4 +14,8 @@ public interface IServiceCoord {
     Boolean validate(int id);
 
 	Boolean validateCID(int id);
+
+	Boolean validateFID(int fId);
+
+	int updateProgram(TrainingProgram trainingProgram);
 }

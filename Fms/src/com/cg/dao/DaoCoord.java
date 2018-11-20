@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.cg.bean.TrainingProgram;
@@ -79,6 +81,51 @@ public class DaoCoord implements IDaoCoord {
 			return false;
 		}
 		else return true;
+	}
+	@Override
+	public Boolean validateFID(int fId) {
+		
+		String query="select Employee_ID from Employee_master where Employee_ID=? and role=faculty";
+		ResultSet resultSet=null;
+		try {
+			PreparedStatement stmt=conn.prepareStatement(query);
+			stmt.setInt(1, fId);
+			resultSet=stmt.executeQuery();
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}	if(resultSet==null)
+		{
+			return false;
+		}
+		else return true;
+	}
+	@Override
+	public int updateProgram(TrainingProgram trainingProgram) {
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		java.util.Date date = sdf1.parse(trainingProgram.getStartdate());
+		java.sql.Date startDate = new java.sql.Date(date.getTime());
+		java.util.Date date2 = sdf1.parse(trainingProgram.getEndDate());
+		java.sql.Date endDate = new java.sql.Date(date2.getTime());
+		
+		
+		
+		String query="update Training_Program Set course_code=?, Faculty_code=?,Start_Date=?,End_Date=? where Training_code=?"; 
+		try {
+			PreparedStatement stmt= conn.prepareStatement(query);
+			stmt.setInt(1,trainingProgram.getCourseCode());
+			stmt.setInt(2,trainingProgram.getFacultyCode());
+			stmt.setDate(3, startDate);
+			stmt.setDate(4, endDate);
+			stmt.setInt(5, trainingProgram.getTrainingCode());
+			int result=stmt.executeUpdate();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return 1;
 	}
 
 }

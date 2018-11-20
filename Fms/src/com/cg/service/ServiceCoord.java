@@ -40,4 +40,16 @@ public class ServiceCoord implements IServiceCoord{
 		return dao.validateCID(id);
 	}
 
+	@Override
+	public Boolean validateFID(int fId) {
+		
+		return dao.validateFID(fId);
+	}
+
+	@Override
+	public int updateProgram(TrainingProgram trainingProgram) {
+		
+		return dao.updateProgram(trainingProgram);
+	}
+
 }

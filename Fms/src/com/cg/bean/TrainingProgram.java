@@ -7,6 +7,7 @@ int courseCode;
 int facultyCode;
 String startdate;
 String endDate;
+public TrainingProgram(){}
 public int getTrainingCode() {
 	return trainingCode;
 }
