@@ -103,12 +103,22 @@ public class DaoCoord implements IDaoCoord {
 	}
 	@Override
 	public int updateProgram(TrainingProgram trainingProgram) {
+		java.sql.Date startDate = null;
+		int result = 0;
+		java.util.Date date2;
+		java.sql.Date endDate = null;
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
-		java.util.Date date = sdf1.parse(trainingProgram.getStartdate());
-		java.sql.Date startDate = new java.sql.Date(date.getTime());
-		java.util.Date date2 = sdf1.parse(trainingProgram.getEndDate());
-		java.sql.Date endDate = new java.sql.Date(date2.getTime());
+		java.util.Date date;
+		try {
+			date = sdf1.parse(trainingProgram.getStartdate());
 		
+		 startDate = new java.sql.Date(date.getTime());
+		 date2 = sdf1.parse(trainingProgram.getEndDate());
+		 endDate = new java.sql.Date(date2.getTime());
+		} catch (ParseException e1) {
+		                       	// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		
 		String query="update Training_Program Set course_code=?, Faculty_code=?,Start_Date=?,End_Date=? where Training_code=?"; 
@@ -119,13 +129,73 @@ public class DaoCoord implements IDaoCoord {
 			stmt.setDate(3, startDate);
 			stmt.setDate(4, endDate);
 			stmt.setInt(5, trainingProgram.getTrainingCode());
-			int result=stmt.executeUpdate();
+		 result=stmt.executeUpdate();
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
 		
-		return 1;
+		return result;
+	}
+	
+	
+	
+	
+	
+	@Override                         //ADDING NEW TRAINING PROGRAM 
+	public Boolean addProgram(TrainingProgram trainingProgram) {
+		java.sql.Date startDate = null;
+		int result = 0;
+		java.util.Date date2;
+		java.sql.Date endDate = null;
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		java.util.Date date;
+		try {
+			date = sdf1.parse(trainingProgram.getStartdate());
+		
+		 startDate = new java.sql.Date(date.getTime());
+		 date2 = sdf1.parse(trainingProgram.getEndDate());
+		 endDate = new java.sql.Date(date2.getTime());
+		} catch (ParseException e1) {
+		                       	// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String query="insert into Training_program values(?,?,?,?,?)";
+		try {
+			PreparedStatement stmt= conn.prepareStatement(query);
+			stmt.setInt(2,trainingProgram.getCourseCode());
+			stmt.setInt(3,trainingProgram.getFacultyCode());
+			stmt.setDate(4, startDate);
+			stmt.setDate(5, endDate);
+			stmt.setInt(1, trainingProgram.getTrainingCode());
+			result=stmt.executeUpdate();
+			if(result>0)
+			{return true;}
+			else
+				return false;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		return false;
+	}
+	@Override
+	public int removeProgram(int id) {
+		int result = 0;
+		String query="delete from Training_Program where Training_Code=?";
+		try {
+			PreparedStatement stmt= conn.prepareStatement(query);
+			stmt.setInt(1, id);
+			result=stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 }

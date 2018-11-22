@@ -52,4 +52,16 @@ public class ServiceCoord implements IServiceCoord{
 		return dao.updateProgram(trainingProgram);
 	}
 
+	@Override
+	public Boolean addProgram(TrainingProgram trainingProgram) {
+		return dao.addProgram(trainingProgram);
+		
+	}
+
+	@Override
+	public int removeProgram(int id) {
+		
+		return dao.removeProgram(id);
+	}
+
 }

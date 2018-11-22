@@ -24,7 +24,7 @@ public class ServiceAdmin implements IServiceAdmin{
 	}
   Boolean validate(int id)
   {
-	  if
+//	  if
 	 return ad.validate(id); 
 	  
 	  

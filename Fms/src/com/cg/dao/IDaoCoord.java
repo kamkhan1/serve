@@ -16,4 +16,8 @@ public interface IDaoCoord {
 
 	int updateProgram(TrainingProgram trainingProgram);
 
+	Boolean addProgram(TrainingProgram trainingProgram);
+
+	int removeProgram(int id);
+
 }
