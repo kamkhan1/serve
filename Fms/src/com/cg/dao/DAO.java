@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 import com.cg.util.DBUtil;
 
@@ -13,6 +14,7 @@ import com.cg.util.DBUtil;
 
 public class DAO implements IDao{
 	Connection conn;
+	Scanner kb=new Scanner(System.in);
 
 	public DAO(){
 
@@ -51,6 +53,26 @@ public class DAO implements IDao{
 		}
 		return null;
 	}
+@Override
+public Boolean validatePID(int pId)
+{
+	
+	String query="select Employee_ID from Employee_master where Employee_ID=? and role= participant";
+	ResultSet resultSet=null;
+	try {
+		PreparedStatement stmt=conn.prepareStatement(query);
+		stmt.setInt(1, pId);
+		resultSet=stmt.executeQuery();
+	
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+	}	if(resultSet==null)
+	{
+		return false;
+	}
+	else return true;}
+
 
 //	@Override
 //	public void show() {

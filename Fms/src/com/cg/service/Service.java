@@ -1,5 +1,7 @@
 package com.cg.service;
 
+import java.util.Scanner;
+
 import com.cg.dao.DAO;
 import com.cg.dao.IDao;
 
@@ -34,6 +36,26 @@ public class Service implements IService{
 	public void show() {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+
+	@Override
+	public Boolean checkInt(String num) {
+	   Scanner kb=new Scanner(num);
+	   if(kb.hasNextInt())
+	    return true ;
+	   else return false;
+	}
+
+
+
+
+	@Override
+	public Boolean validatePID(int pId) {
+		
+		return dao.validatePID(pId);
 	}
 	
 
