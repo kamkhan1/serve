@@ -156,7 +156,7 @@ public class DAO implements IDao {
 
 	@Override
 	public Boolean validateCID(int cId) {
-		String query = "select course_ID from Course_master where Course_ID=?";
+		String query = "select Course_ID from Course_master where Course_ID=?";
 		ResultSet resultSet = null;
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);

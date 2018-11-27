@@ -122,8 +122,10 @@ public class Fmsmain {
 										}
 									}
 								} while (again == 'y' || again == 'Y');
+								break;
 							}
 							case 2: {
+								fList.clear();
 								fList = service.showSkill();
 								for (FacultySkill obj : fList) {
 									System.out.println(obj);
@@ -140,6 +142,7 @@ public class Fmsmain {
 								break;
 							}
 							case 4: {
+								again='n';
 								break;
 							}
 							default: {
@@ -150,13 +153,14 @@ public class Fmsmain {
 							}// switch end
 								// System.out.println("do you want to continue?");
 							// again = kb.next().trim().charAt(0);
-						} while (again != 'n' || again != 'N'
-								|| (interchoice != 4));
+						} while ((interchoice != 4)||again=='y'||again=='Y'
+								);
+						break;
 
 					}
 
 					case 2: {
-						do {
+						do {cList.clear();
 							cList = admin.courseMaintenance();
 							for (CourseMaster courses : cList) {
 								System.out.println(courses);
@@ -196,14 +200,14 @@ public class Fmsmain {
 									if (result == 0) {
 										System.out.println("updation failed");
 									} else
-										System.out
-												.println("course updated successfully");
+								System.out.println("course updated successfully");
 									System.out.println("continue updation?");
 									again = kb.next().trim().charAt(0);
 								}
 
 							}
 						} while (again != 'n' || again == 'N');
+						break;
 
 					}
 					case 3: {
@@ -213,7 +217,9 @@ public class Fmsmain {
 						break;
 					}
 					}
-				} while (true);
+				} while (choice!=4);
+				break;
+			
 			}
 
 			case "coordinator": {
@@ -274,6 +280,7 @@ public class Fmsmain {
 									System.out
 											.println("enter new faculty code:");
 									fId = kb.nextInt();
+									kb.nextLine();
 									b = coord.validateFID(fId);
 									{
 										System.out
@@ -318,6 +325,7 @@ public class Fmsmain {
 								again = kb.next().trim().charAt(0);
 							} while ((result > 0 && (again == 'y' || again == 'Y'))
 									|| (result < 0 && (again == 'y' || again == 'Y')));
+							break;
 
 						}
 						case 2: {
@@ -332,6 +340,7 @@ public class Fmsmain {
 									System.out
 											.println("enter new faculty code:");
 									fId = kb.nextInt();
+									kb.next();
 									b = coord.validateFID(fId);
 								} while (b == false);
 								System.out.println("enter new start date:");
@@ -353,6 +362,7 @@ public class Fmsmain {
 								again = kb.next().trim().charAt(0);
 							} while ((insert == true && (again == 'y' || again == 'Y'))
 									|| (insert == false && (again == 'y' || again == 'Y')));
+							break;
 						}
 						case 3: {
 							do {

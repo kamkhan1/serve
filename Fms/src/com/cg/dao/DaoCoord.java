@@ -86,7 +86,7 @@ public class DaoCoord implements IDaoCoord {
 	@Override
 	public Boolean validateFID(int fId) {
 		
-		String query="select Employee_ID from Employee_master where Employee_ID=? and role=faculty";
+		String query="select Employee_ID from Employee_master where Employee_ID=? and Role='Faculty'";
 		ResultSet resultSet=null;
 		try {
 			PreparedStatement stmt=conn.prepareStatement(query);

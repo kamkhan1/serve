@@ -68,7 +68,7 @@ public class DaoAdmin implements IDaoAdmin{
    }
    @Override
    public int updateCourse(CourseMaster coursemaster) {
-       String query="update COURSE_MASTER Set Course_Name, No_of_Days=? where Course_Id=?"; 
+       String query="update COURSE_MASTER Set Course_Name=?, No_of_Days=? where Course_Id=?"; 
        int result = 0;
 	try {
            PreparedStatement stmt= conn.prepareStatement(query);
