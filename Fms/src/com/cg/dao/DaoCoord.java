@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import com.cg.bean.ParticipantEnrollment;
 import com.cg.bean.TrainingProgram;
 import com.cg.util.DBUtil;
 
@@ -196,6 +197,35 @@ public class DaoCoord implements IDaoCoord {
 		}
 		
 		return result;
+	}
+	@Override
+	public int enrollParticipant(ParticipantEnrollment enroll) {
+		int x = 0;
+		String sql="INSERT INTO TRAINING_PARTICIPANT_ENROLLMENT VALUES(?,?)"; 
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+					
+			
+			statement.setInt(1,enroll.getTrainingCode());
+			statement.setInt(2,enroll.getParticipantId());
+			
+			
+			
+			x=statement.executeUpdate();
+			//System.out.println("Enrolled Successful ..");
+			
+			
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+			
+			
+		}
+			
+		return x;
+		
 	}
 
 }

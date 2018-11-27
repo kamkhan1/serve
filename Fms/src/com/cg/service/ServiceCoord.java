@@ -2,6 +2,7 @@ package com.cg.service;
 
 import java.util.ArrayList;
 
+import com.cg.bean.ParticipantEnrollment;
 import com.cg.bean.TrainingProgram;
 import com.cg.dao.DaoCoord;
 import com.cg.dao.IDaoCoord;
@@ -62,6 +63,12 @@ public class ServiceCoord implements IServiceCoord{
 	public int removeProgram(int id) {
 		
 		return dao.removeProgram(id);
+	}
+
+	@Override
+	public int enrollParticipant(ParticipantEnrollment enroll) {
+		
+		return dao.enrollParticipant(enroll);
 	}
 
 }

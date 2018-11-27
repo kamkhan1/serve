@@ -2,6 +2,7 @@ package com.cg.service;
 
 import java.util.ArrayList;
 
+import com.cg.bean.ParticipantEnrollment;
 import com.cg.bean.TrainingProgram;
 
 public interface IServiceCoord {
@@ -22,4 +23,6 @@ public interface IServiceCoord {
 	Boolean addProgram(TrainingProgram trainingProgram);
 
 	int removeProgram(int id);
+
+	int enrollParticipant(ParticipantEnrollment enroll);
 }

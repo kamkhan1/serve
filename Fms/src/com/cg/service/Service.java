@@ -1,7 +1,10 @@
 package com.cg.service;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.cg.bean.EmployeeMaster;
+import com.cg.bean.FacultySkill;
 import com.cg.dao.DAO;
 import com.cg.dao.IDao;
 
@@ -57,6 +60,57 @@ public class Service implements IService{
 		
 		return dao.validatePID(pId);
 	}
+
+
+
+
+	@Override
+	public Boolean validateTID(int tId) {
+		// TODO Auto-generated method stub
+		return dao.validateTID(tId);
+	}
+
+
+
+
+	@Override
+	public ArrayList<FacultySkill> showSkill() {
+		// TODO Auto-generated method stub
+		return dao.showSkill();
+	}
+
+
+
+
+	@Override
+	public Boolean validateFID(int fId) {
+		return dao.validateFID(fId);
+		
+		
+	}
+
+
+
+
+	@Override
+	public ArrayList<EmployeeMaster> showEmployees() {
+		
+		return dao.showEmployees();
+	}
+
+
+
+
+	@Override
+	public Boolean validateCID(int cId) {
+		
+		return dao.validateCID(cId);
+	}
+
+
+
+
+
 	
 
 }

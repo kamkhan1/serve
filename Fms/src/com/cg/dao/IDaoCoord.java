@@ -2,6 +2,7 @@ package com.cg.dao;
 
 import java.util.ArrayList;
 
+import com.cg.bean.ParticipantEnrollment;
 import com.cg.bean.TrainingProgram;
 
 public interface IDaoCoord {
@@ -19,5 +20,7 @@ public interface IDaoCoord {
 	Boolean addProgram(TrainingProgram trainingProgram);
 
 	int removeProgram(int id);
+
+	int enrollParticipant(ParticipantEnrollment enroll);
 
 }
