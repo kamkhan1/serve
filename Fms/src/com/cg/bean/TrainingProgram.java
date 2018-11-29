@@ -49,9 +49,7 @@ public void setEndDate(String endDate) {
 }
 @Override
 public String toString() {
-	return "TrainingProgram [trainingCode=" + trainingCode + ", courseCode="
-			+ courseCode + ", facultyCode=" + facultyCode + ", startdate="
-			+ startdate + ", endDate=" + endDate + "]";
+	return "      "+ trainingCode + "                  "+ courseCode + "              " + facultyCode + "             "	+ startdate + "       " + endDate ;
 }
 
 

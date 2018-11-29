@@ -19,6 +19,7 @@ public class DaoCoord implements IDaoCoord {
 	}
 	
 	ArrayList<TrainingProgram> al=new ArrayList<TrainingProgram>();
+	TrainingProgram program;
 	@Override
 	public ArrayList<TrainingProgram> trainingMaintenance() 
 	{
@@ -35,8 +36,9 @@ public class DaoCoord implements IDaoCoord {
 			int facultyCode=rset.getInt(3);
 			String startdate=rset.getString(4);
 			String endDate=rset.getString(5);
-			TrainingProgram obj=new TrainingProgram(trainingCode,courseCode,facultyCode,startdate,endDate);
-			al.add(obj);
+			program=new TrainingProgram(trainingCode,courseCode,facultyCode,startdate,endDate);
+			al.add(program);
+			//System.out.println(program);
 			
 		}
 	}

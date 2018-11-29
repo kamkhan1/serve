@@ -17,7 +17,7 @@ public class FacultySkill {
 	}
 	@Override
 	public String toString() {
-				return "" + fId + "" + skill ;
+				return "           " + fId + "        " + skill ;
 	}
 	public FacultySkill(int fId, String skill) {
 		super();

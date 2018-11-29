@@ -41,8 +41,7 @@ public void setNo_of_Days(int no_of_Days) {
 
 @Override
 public String toString() {
-    return "CourseMaster [Course_ID=" + Course_ID + ", Course_Name="
-            + Course_Name + ", No_of_Days=" + No_of_Days + "]";
+    return "          "+Course_ID + "            "+ No_of_Days+"              "+ Course_Name ;
 }
 
 

@@ -40,10 +40,12 @@ public class DAO implements IDao {
 					return "admin";
 				} else if (rSet.getString(4).equalsIgnoreCase("coordinator")) {
 					return "coordinator";
-				} else // participant
+				} else if(rSet.getString(4).equalsIgnoreCase("participant"))// participant
 				{
 					return "participant";
 				}
+				else
+					return "WELCOME "+ rSet.getString(2)+" \n WE APPRECIATE YOUR TEACHING AND THANKYOU FOR YOUR CONTRIBUTION. YOU DON'T HAVE ANY FUNCTIONALITY YET, WE WILL UPDATE YOU SOON...";
 			}
 		} catch (SQLException e) {
 
@@ -55,7 +57,7 @@ public class DAO implements IDao {
 	@Override
 	public Boolean validatePID(int pId) {
 
-		String query = "select Employee_ID from Employee_master where Employee_ID=? and role= participant";
+		String query = "select Employee_ID from Employee_master where Employee_ID=? and role= 'Participant'";
 		ResultSet resultSet = null;
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);

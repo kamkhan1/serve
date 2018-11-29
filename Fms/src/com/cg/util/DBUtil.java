@@ -29,12 +29,12 @@ public class DBUtil {
 		Connection con = null;
 		try {
 			con = DriverManager.getConnection
-			("jdbc:mysql://localhost:3306/Kamran_161143","root","root");
+			("jdbc:mysql://localhost:3306/feedback","root","root");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(con);
+		//System.out.println(con);
 		
 		return con;
 }
