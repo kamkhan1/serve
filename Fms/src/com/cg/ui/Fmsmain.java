@@ -33,7 +33,9 @@ public class Fmsmain {
 		String num = "";
 		String skill = "";
 		String cname = "";
-		int result, fId = 0, tId, id, cId = 0, pId, days = 0;
+		String date;
+		String date2;
+		int result, fId = 0, tId, id = 0, cId = 0, pId, days = 0;
 		int choice = 0;
 		int interchoice = 0;
 		int cmaint = 0;
@@ -45,19 +47,24 @@ public class Fmsmain {
 		ArrayList<FacultySkill> fList = new ArrayList<FacultySkill>();
 		ArrayList<EmployeeMaster> eList = new ArrayList<EmployeeMaster>();
 		ArrayList<CourseMaster> cList = new ArrayList<CourseMaster>();
-		
+
 		do {
-			do {System.out.println("\n");
-				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~DATA GLOBAL SOLUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ");
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                System.out.println("                              WELCOME TO FEEDBACK MANAGEMENT SYSTEM ");
-				
-				do {System.out.print("Employee ID: ");
+			do {
+				System.out.println("\n");
+				System.out
+						.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~DATA GLOBAL SOLUTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ");
+				System.out
+						.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+				System.out
+						.println("                              WELCOME TO FEEDBACK MANAGEMENT SYSTEM ");
+
+				do {
+					System.out.print("Employee ID: ");
 					num = kb.next();
 					if (service.checkInt(num) == false) {
 						System.out
 								.println("your Employee ID is a unique number,please input that number\n\n");
-				
+
 					} else {
 						eid = Integer.parseInt(num);
 					}
@@ -66,18 +73,21 @@ public class Fmsmain {
 				System.out.print("passsword: ");
 				String pass = kb.nextLine();
 				System.out.println("\n ");
-			
+
 				Boolean b = service.isValid(eid, pass);
 				if (b == true) {
 					role = service.validate(eid, pass);
-				
-					System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					if (role.equals("admin") || role.equals("coordinator") || role.equals("participant"))
+
+					System.out
+							.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+					if (role.equals("admin") || role.equals("coordinator")
+							|| role.equals("participant"))
 						break;
 					else
 						System.out.println(role);
 				} else {
-					System.out.println("please enter correct id and password!!");
+					System.out
+							.println("please enter correct id and password!!");
 				}
 
 			} while (true);
@@ -97,7 +107,6 @@ public class Fmsmain {
 							choice = Integer.parseInt(num);
 						}
 					} while (service.checkInt(num) == false);
-					
 
 					switch (choice) {
 					case 1: {
@@ -112,7 +121,8 @@ public class Fmsmain {
 							do {
 								num = kb.next();
 								if (service.checkInt(num) == false) {
-									System.out.println("please input only number:");
+									System.out
+											.println("please input only number:");
 								} else {
 									interchoice = Integer.parseInt(num);
 								}
@@ -133,16 +143,21 @@ public class Fmsmain {
 									if (service.validateFID(fId) == false) {
 										System.out
 												.println("faculty ID not exist.");
-										do{
-										System.out.println("want to try again(y/n)?");
-										
-										again = kb.next().trim().charAt(0);
-										
-											if(again=='y'||again=='Y'||again=='n'||again=='N')
+										do {
+											System.out
+													.println("want to try again(y/n)?");
+
+											again = kb.next().trim().charAt(0);
+
+											if (again == 'y' || again == 'Y'
+													|| again == 'n'
+													|| again == 'N')
 												break;
-											else
-											{System.out.println("please give proper response..");}
-										}while(true);
+											else {
+												System.out
+														.println("please give proper response..");
+											}
+										} while (true);
 									} else {
 
 										System.out.println("enter new skill:");
@@ -156,11 +171,9 @@ public class Fmsmain {
 												skill = num;
 											}
 										} while (service.checkInt(num) == true);
-										
-										
-										
-										//skill = kb.next();
-										
+
+										// skill = kb.next();
+
 										facultySkill = new FacultySkill(fId,
 												skill);
 										result = admin
@@ -173,19 +186,24 @@ public class Fmsmain {
 										} else {
 											System.out
 													.println("skills updated..");
-											do{
+											do {
 												System.out
-												.println("do you want more updation?(y/n):");
-												
-												again = kb.next().trim().charAt(0);
-												
-													if(again=='y'||again=='Y'||again=='n'||again=='N')
-														break;
-													else
-													{System.out.println("please give proper response..");}
-												}while(true);
-											
-											
+														.println("do you want more updation?(y/n):");
+
+												again = kb.next().trim()
+														.charAt(0);
+
+												if (again == 'y'
+														|| again == 'Y'
+														|| again == 'n'
+														|| again == 'N')
+													break;
+												else {
+													System.out
+															.println("please give proper response..");
+												}
+											} while (true);
+
 										}
 									}
 								} while (again == 'y' || again == 'Y');
@@ -193,9 +211,12 @@ public class Fmsmain {
 							}
 							case 2: {
 								fList.clear();
-								System.out.println("     ____________________________");
-								System.out.println("       Faculty ID       Skill");
-								System.out.println("     -----------------------------");
+								System.out
+										.println("     ____________________________");
+								System.out
+										.println("       Faculty ID       Skill");
+								System.out
+										.println("     -----------------------------");
 								fList = service.showSkill();
 								for (FacultySkill obj : fList) {
 									System.out.println(obj);
@@ -212,9 +233,9 @@ public class Fmsmain {
 								break;
 							}
 							case 4: {
-//								for(int i=0;i<40;i++)
-//								{System.out.println("\n");}
-								again='n';
+								// for(int i=0;i<40;i++)
+								// {System.out.println("\n");}
+								again = 'n';
 								break;
 							}
 							default: {
@@ -225,114 +246,123 @@ public class Fmsmain {
 							}// switch end
 								// System.out.println("do you want to continue?");
 							// again = kb.next().trim().charAt(0);
-						} while ((interchoice != 4)||again=='y'||again=='Y'
-								);
+						} while ((interchoice != 4) || again == 'y'
+								|| again == 'Y');
 						break;
 
 					}
 
 					case 2: {
-						do{
-						System.out.println("1.  View COURSES.");
-						System.out.println("2.  Update Course Details.");
-						System.out.println("3.  Exit");
 						do {
-							num = kb.next();
-							if (service.checkInt(num) == false) {
-								System.out
-										.println("please input only number:");
-							} else {
-							 cmaint = Integer.parseInt(num);
-							}
-						} while (service.checkInt(num) == false);
-                         	if(cmaint==1)
-                         	{
-					   cList.clear();
-							cList = admin.courseMaintenance();
-							System.out.println("______________________________________________________");
-							System.out.println("      Course_ID      No_of_Days       Course_Name");
-							System.out.println("------------------------------------------------------");
-							for (CourseMaster courses : cList) {
-								System.out.println(courses);
-							}}
-							//System.out.println("want to update?(y/n)");
-							//again = kb.next().trim().charAt(0);
-                         	else if (cmaint==2) {
-                         		do{
-								System.out.println("enter a course code:");
-								do {
-									num = kb.next();
-									if (service.checkInt(num) == false) {
-										System.out
-												.println("please input valid course code:");
-									} else {
-										cId = Integer.parseInt(num);
-									}
-								} while (service.checkInt(num) == false);
-								check = service.validateCID(cId);
-								if (check == false) {
-									System.out.println("course ID not Exist!!!");
-								} else {
+							System.out.println("1.  View COURSES.");
+							System.out.println("2.  Update Course Details.");
+							System.out.println("3.  Exit");
+							do {
+								num = kb.next();
+								if (service.checkInt(num) == false) {
 									System.out
-											.print("enter new name for course: ");
-									cname = kb.next();
-									System.out.print("\nenter no. of days: ");
+											.println("please input only number:");
+								} else {
+									cmaint = Integer.parseInt(num);
+								}
+							} while (service.checkInt(num) == false);
+							if (cmaint == 1) {
+								cList.clear();
+								cList = admin.courseMaintenance();
+								System.out
+										.println("______________________________________________________");
+								System.out
+										.println("      Course_ID      No_of_Days       Course_Name");
+								System.out
+										.println("------------------------------------------------------");
+								for (CourseMaster courses : cList) {
+									System.out.println(courses);
+								}
+							}
+							// System.out.println("want to update?(y/n)");
+							// again = kb.next().trim().charAt(0);
+							else if (cmaint == 2) {
+								do {
+									System.out.println("enter a course code:");
 									do {
 										num = kb.next();
 										if (service.checkInt(num) == false) {
 											System.out
-													.print("\nplease input only number:");
+													.println("please input valid course code:");
 										} else {
-											days = Integer.parseInt(num);
+											cId = Integer.parseInt(num);
 										}
 									} while (service.checkInt(num) == false);
-									course = new CourseMaster(cId, cname, days);
-									result = admin.updateCourse(course);
-									if (result == 0) {
-										System.out.println("updation failed!!!");
-									} else
-								System.out.println("course updated successfully!!");
-									do{
+									check = service.validateCID(cId);
+									if (check == false) {
 										System.out
-										.print("do you want more updation?(y/n):");
-										
-										again = kb.next().trim().charAt(0);
-										
-											if(again=='y'||again=='Y'||again=='n'||again=='N')
-												break;
-											else
-											{System.out.println("please give proper response..");}
-										}while(true);
-//									System.out.println("continue updation?(y/n)");
-//									again = kb.next().trim().charAt(0);
-								}
+												.println("course ID not Exist!!!");
+									} else {
+										System.out
+												.print("enter new name for course: ");
+										cname = kb.next();
+										System.out
+												.print("\nenter no. of days: ");
+										do {
+											num = kb.next();
+											if (service.checkInt(num) == false) {
+												System.out
+														.print("\nplease input only number:");
+											} else {
+												days = Integer.parseInt(num);
+											}
+										} while (service.checkInt(num) == false);
+										course = new CourseMaster(cId, cname,
+												days);
+										result = admin.updateCourse(course);
+										if (result == 0) {
+											System.out
+													.println("updation failed!!!");
+										} else
+											System.out
+													.println("course updated successfully!!");
+										do {
+											System.out
+													.print("do you want more updation?(y/n):");
 
-							}while (again != 'n' || again == 'N');
-						}
-                         	else if(cmaint==3)
-                         	{
-                         		break;
-                         	}
-                         	else
-                         	{
-                         		System.out.println("please input corrrect choice.");
-                         	}
-						}while(cmaint!=3);
+											again = kb.next().trim().charAt(0);
+
+											if (again == 'y' || again == 'Y'
+													|| again == 'n'
+													|| again == 'N')
+												break;
+											else {
+												System.out
+														.println("please give proper response..");
+											}
+										} while (true);
+										// System.out.println("continue updation?(y/n)");
+										// again = kb.next().trim().charAt(0);
+									}
+
+								} while (again != 'n' || again == 'N');
+							} else if (cmaint == 3) {
+								break;
+							} else {
+								System.out
+										.println("please input corrrect choice.");
+							}
+						} while (cmaint != 3);
 						break;
 
 					}
 					case 3: {
-					
+
 					}
 					case 4: {
-//						for(int i=0;i<40;i++)
-//						{System.out.println("\n");}
+						// for(int i=0;i<40;i++)
+						// {System.out.println("\n");}
 						break;
 					}
 					}
-				} while (choice!=4);
+				} while (choice != 4);
 				break;
-			
+
 			}
 
 			case "coordinator": {
@@ -350,7 +380,8 @@ public class Fmsmain {
 					ArrayList<TrainingProgram> al = new ArrayList<TrainingProgram>();
 					int maintain_choice;
 					switch (choice) {
-					case 1: {do{
+					case 1: {
+                       do{
 						System.out.println("1. Display current programs.");
 						System.out.println("2. modify a program");
 						System.out.println("3. Add a new program");
@@ -358,18 +389,24 @@ public class Fmsmain {
 						System.out.println("5. exit");
 						maintain_choice = kb.nextInt();
 						switch (maintain_choice) {
-						case 1:{
-							al = coord.trainingMaintenance(); // getting training
+						case 1: {
+							al.clear();
+							al = coord.trainingMaintenance(); // getting
+																// training
 							// Program table
 							// from
 							// database
-               System.out.println("Training code "+"     "+"Course code "+"       "+ "Faculty Code"+""  + "     	"+"  startdate "+ "       "+ "endDate");
-               System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------");
-                            for (TrainingProgram obj : al) {
-                            System.out.println(obj);
-                            } // displaying the training_program table to the
-                             // coordinator..
-                            break;
+							System.out.println("Training code " + "     "
+									+ "Course code " + "       "
+									+ "Faculty Code" + "" + "     	"
+									+ "  startdate " + "       " + "endDate");
+							System.out
+									.println("--------------------------------------------------------------------------------------------------------------------------------------------------");
+							for (TrainingProgram obj : al) {
+								System.out.println(obj);
+							} // displaying the training_program table to the
+								// coordinator..
+							break;
 
 						}
 						case 2: {
@@ -379,15 +416,36 @@ public class Fmsmain {
 							do {
 								do {
 									System.out.println("which one to modify?");
-									id = kb.nextInt();
+									do {
+										num = kb.next();
+										if (service.checkInt(num) == false) {
+											System.out
+													.print("\nplease input only number:");
+										} else {
+											id = Integer.parseInt(num);
+										}
+									} while (service.checkInt(num) == false);
+									
 									b = coord.validate(id);
+									if(b==false)
+									{
+										System.out.println("there is no training with this ID.. try again");
+									}
 								} while (b == false);
 								b = false;
 
 								do {
-									System.out
-											.print("enter new course code:");
-									cId = kb.nextInt();
+									System.out.print("enter new course code:");
+									do {
+										num = kb.next();
+										if (service.checkInt(num) == false) {
+											System.out
+													.print("\nplease input only number:");
+										} else {
+											cId = Integer.parseInt(num);
+										}
+									} while (service.checkInt(num) == false);
+									
 									b = coord.validateCID(cId);
 									if (b == false) {
 										System.out
@@ -395,20 +453,36 @@ public class Fmsmain {
 									}
 								} while (b == false);
 								do {
+						
 									System.out
 											.println("enter new faculty code:");
-									fId = kb.nextInt();
+									do {
+										num = kb.next();
+										if (service.checkInt(num) == false) {
+											System.out
+													.print("\nplease input only number:");
+										} else {
+											fId = Integer.parseInt(num);
+										}
+									} while (service.checkInt(num) == false);
+									
 									kb.nextLine();
 									b = coord.validateFID(fId);
+									if(b==false)
 									{
 										System.out
 												.println("Please input valid faculty id...");
 									}
 								} while (b == false);
-
+                                do{
 								System.out.println("enter new start date:");
-								String date = kb.nextLine();
-
+								date = kb.nextLine();
+								b=coord.isValidDate(date);
+								if(b==false)
+								{
+									System.out.println("Please input valid date");
+								}
+                                }while(b==false);
 								// try {
 								// date1=new
 								// SimpleDateFormat("dd/MM/yyyy").parse(date);
@@ -416,16 +490,14 @@ public class Fmsmain {
 								//
 								// e.printStackTrace();
 								// }
+                                do{
 								System.out.println("enter new end date");
-								String date2 = kb.nextLine();
-								// try {
-								// date2=new
-								// SimpleDateFormat("dd/MM/yyyy").parse(date);
-								// }
-								// catch (ParseException e) {
-								//
-								// e.printStackTrace();
-								// }
+								date2 = kb.nextLine();
+							    b=coord.isValidDate(date2);
+							    if(b==false)
+							    {
+							    	System.out.println("please input valid date");
+							    }}while(b==false);
 								trainingProgram.setTrainingCode(id);
 								trainingProgram.setCourseCode(cId);
 								trainingProgram.setStartdate(date);
@@ -451,20 +523,63 @@ public class Fmsmain {
 								do {
 									System.out
 											.println("enter new course code:");
-									cId = kb.nextInt();
+									do {
+										num = kb.next();
+										if (service.checkInt(num) == false) {
+											System.out
+													.print("\nplease input only number:");
+										} else {
+											cId = Integer.parseInt(num);
+										}
+									} while (service.checkInt(num) == false);
+									
 									b = coord.validateCID(cId);
-								} while (b == false);
+									if(b==false)
+									{
+										System.out.println("This Course ID not exist.");
+									}
+								}while (b == false);
 								do {
 									System.out
 											.println("enter new faculty code:");
-									fId = kb.nextInt();
-									kb.next();
+									do {
+										num = kb.next();
+										if (service.checkInt(num) == false) {
+											System.out
+													.print("\nplease input only number:");
+										} else {
+											fId = Integer.parseInt(num);
+										}
+									} while (service.checkInt(num) == false);
+									
+									//kb.next();
 									b = coord.validateFID(fId);
+									if(b==false)
+									{System.out.println("this faculty doesnt exist.");}
 								} while (b == false);
-								System.out.println("enter new start date:");
-								String date = kb.nextLine();
-								System.out.println("enter new end date");
-								String date2 = kb.nextLine();
+							
+								 do{
+										System.out.println("enter new start date:");
+										date = kb.next();
+										//kb.next();
+										b=coord.isValidDate(date);
+										if(b==false)
+										{
+											System.out.println("Please input valid date");
+										}
+		                                }while(b==false);
+								
+								//System.out.println("enter new end date");
+								 do{
+										System.out.println("enter new end date:");
+										//kb.next();
+										date2 = kb.next();
+										b=coord.isValidDate(date2);
+										if(b==false)
+										{
+											System.out.println("Please input valid date");
+										}
+		                                }while(b==false);
 								trainingProgram.setCourseCode(cId);
 								trainingProgram.setStartdate(date);
 								trainingProgram.setEndDate(date2);
@@ -506,6 +621,7 @@ public class Fmsmain {
 								again = kb.next().trim().charAt(0);
 							} while ((result > 0 && (again == 'y' || again == 'Y'))
 									|| (result < 0 && (again == 'y' || again == 'Y')));
+							break;
 						}
 						case 5: {
 							break;
@@ -513,11 +629,19 @@ public class Fmsmain {
 						default: {
 							System.out.println("enter correct choice.");
 						}
+							break;
 						}
-						break;
-					}while(choice!=5);
-					}
+					}while(maintain_choice!=5);
+					break;}
 					case 2: {
+						System.out.println("Training code " + "     "
+								+ "Course code " + "       "
+								+ "Faculty Code" + "" + "     	"
+								+ "  startdate " + "       " + "endDate");
+						System.out
+								.println("--------------------------------------------------------------------------------------------------------------------------------------------------");
+					
+						al.clear();
 						al = coord.trainingMaintenance();
 						for (TrainingProgram obj : al) {
 							System.out.println(obj);
@@ -570,7 +694,7 @@ public class Fmsmain {
 
 								}
 							}
-						} while (again != 'n' || again != 'N');
+						} while (again =='y' || again == 'Y');
 					}
 					case 3: {
 						coord.viewFeedback();
@@ -582,9 +706,9 @@ public class Fmsmain {
 						System.out.println("please enter correct choice");
 					}
 					}
-				} while(choice!=4);
+				} while (choice != 4);
 				break;
-				
+
 			}
 			case "participant": {
 
@@ -694,7 +818,7 @@ public class Fmsmain {
 				break;
 			}
 			}
-		} while(true);
+		} while (true);
 
 	}
 

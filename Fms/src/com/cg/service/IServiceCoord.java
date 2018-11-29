@@ -25,4 +25,6 @@ public interface IServiceCoord {
 	int removeProgram(int id);
 
 	int enrollParticipant(ParticipantEnrollment enroll);
+
+	Boolean isValidDate(String date);
 }

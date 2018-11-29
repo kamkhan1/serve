@@ -1,5 +1,7 @@
 package com.cg.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import com.cg.bean.ParticipantEnrollment;
@@ -70,5 +72,16 @@ public class ServiceCoord implements IServiceCoord{
 		
 		return dao.enrollParticipant(enroll);
 	}
+	  @Override
+	  public  Boolean isValidDate(String inDate) {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        dateFormat.setLenient(false);
+	        try {
+	            dateFormat.parse(inDate.trim());
+	        } catch (ParseException pe) {
+	            return false;
+	        }
+	        return true;
+	    }
 
 }
