@@ -7,6 +7,7 @@ import com.cg.bean.EmployeeMaster;
 import com.cg.bean.FacultySkill;
 import com.cg.dao.DAO;
 import com.cg.dao.IDao;
+import com.cg.myException.FMSException;
 
 public class Service implements IService{
 	IDao dao=new DAO();
@@ -65,7 +66,7 @@ public class Service implements IService{
 
 
 	@Override
-	public Boolean validateTID(int tId) {
+	public Boolean validateTID(int tId) throws FMSException {
 		// TODO Auto-generated method stub
 		return dao.validateTID(tId);
 	}
@@ -74,7 +75,7 @@ public class Service implements IService{
 
 
 	@Override
-	public ArrayList<FacultySkill> showSkill() {
+	public ArrayList<FacultySkill> showSkill() throws FMSException {
 		// TODO Auto-generated method stub
 		return dao.showSkill();
 	}
@@ -83,7 +84,7 @@ public class Service implements IService{
 
 
 	@Override
-	public Boolean validateFID(int fId) {
+	public Boolean validateFID(int fId) throws FMSException {
 		return dao.validateFID(fId);
 		
 		
@@ -93,7 +94,7 @@ public class Service implements IService{
 
 
 	@Override
-	public ArrayList<EmployeeMaster> showEmployees() {
+	public ArrayList<EmployeeMaster> showEmployees() throws FMSException {
 		
 		return dao.showEmployees();
 	}
@@ -102,7 +103,7 @@ public class Service implements IService{
 
 
 	@Override
-	public Boolean validateCID(int cId) {
+	public Boolean validateCID(int cId) throws FMSException {
 		
 		return dao.validateCID(cId);
 	}

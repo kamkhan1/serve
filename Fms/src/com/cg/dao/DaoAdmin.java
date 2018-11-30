@@ -6,15 +6,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import com.cg.bean.CourseMaster;
 import com.cg.bean.FacultySkill;
 import com.cg.util.DBUtil;
 
 public class DaoAdmin implements IDaoAdmin{
 	Connection conn;
+	Logger myLogger =  Logger.getLogger(DaoAdmin.class.getName( ));
 	public DaoAdmin()
 	{
 		conn=DBUtil.getConnection();
+		PropertyConfigurator.configure("log4j.properties");
 	}
 	
 	@Override
@@ -31,9 +36,10 @@ public class DaoAdmin implements IDaoAdmin{
 			stmt.setInt(2, facultySkill.getfId());
 			stmt.setString(1,facultySkill.getSkill());
 			result=stmt.executeUpdate();
+			myLogger.info("Updated faculty skills: " ); 
 		} catch (SQLException e) {
-		
-			e.printStackTrace();
+			myLogger.error("Exception found  " +e); 
+			//e.printStackTrace();
 		}
 		
 		return result;
@@ -58,10 +64,11 @@ public class DaoAdmin implements IDaoAdmin{
                course=new CourseMaster(Course_Id,Course_Name,No_of_Days);
                al.add(course);
            }
-           
+           myLogger.info("Details found: " + al); 
        } catch (SQLException e) {
            // TODO Auto-generated catch block
-           e.printStackTrace();
+    	   myLogger.error("Exception found  " +e); 
+          // e.printStackTrace();
        }
    
        return al;
@@ -76,9 +83,10 @@ public class DaoAdmin implements IDaoAdmin{
            stmt.setInt(2,coursemaster.getNo_of_Days());
            stmt.setInt(3, coursemaster.getCourse_ID());
           result=stmt.executeUpdate();
+          myLogger.info("Records updated: " ); 
        } catch (SQLException e) {
-           
-           e.printStackTrace();
+    	   myLogger.error("Exception found  " +e); 
+         //  e.printStackTrace();
        }
        
        return result;

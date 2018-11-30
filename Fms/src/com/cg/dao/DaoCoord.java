@@ -8,15 +8,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+import com.cg.bean.FeedbackMaster;
 import com.cg.bean.ParticipantEnrollment;
 import com.cg.bean.TrainingProgram;
+import com.cg.myException.FMSException;
 import com.cg.util.DBUtil;
 
 public class DaoCoord implements IDaoCoord {
 	Connection conn;
-
+	 Logger myLogger =  Logger.getLogger(DaoCoord.class.getName( ));
 	public DaoCoord() {
 		conn = DBUtil.getConnection();
+		PropertyConfigurator.configure("log4j.properties");
 	}
 
 	ArrayList<TrainingProgram> al = new ArrayList<TrainingProgram>();
@@ -24,6 +30,7 @@ public class DaoCoord implements IDaoCoord {
 
 	@Override
 	public ArrayList<TrainingProgram> trainingMaintenance() {
+		al.clear();
 		String query = "select * from training_program";
 		try {
 			PreparedStatement statement = conn.prepareStatement(query);
@@ -40,10 +47,10 @@ public class DaoCoord implements IDaoCoord {
 				al.add(program);
 				// System.out.println(program);
 
-			}
+			}myLogger.info("Training Details : " );
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			myLogger.error("Exception found  " +e);
+			//e.printStackTrace();
 		}
 		return al;
 	}
@@ -60,10 +67,12 @@ public class DaoCoord implements IDaoCoord {
 			if (resultSet.next() == false) {
 				return false;
 			} else
+			{myLogger.info("Training code Selected: " + id); 
 				return true;
-		} catch (SQLException e) {
-
-			e.printStackTrace();
+		
+			}} catch (SQLException e) {
+				myLogger.error("Exception found  " +e);
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -80,10 +89,12 @@ public class DaoCoord implements IDaoCoord {
 			if (resultSet.next() == false) {
 				return false;
 			} else
+			{myLogger.info("Course Id Selected: "+ id );
 				return true;
-		} catch (SQLException e) {
-
-			e.printStackTrace();
+	
+			}} catch (SQLException e) {
+				myLogger.error("Exception found  " +e);
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -102,10 +113,13 @@ public class DaoCoord implements IDaoCoord {
 		{
 			return false;
 		}
-		else return true;
+		else 
+			{myLogger.info("Employee Id selected: " + fId);
+			return true;
+			}
 } catch (SQLException e) {
-			
-			e.printStackTrace();
+	         myLogger.error("Exception found  " +e);
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -126,7 +140,7 @@ public class DaoCoord implements IDaoCoord {
 			endDate = new java.sql.Date(date2.getTime());
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 
 		String query = "update Training_Program Set course_code=?, Faculty_code=?,Start_Date=?,End_Date=? where Training_code=?";
@@ -138,8 +152,9 @@ public class DaoCoord implements IDaoCoord {
 			stmt.setDate(4, endDate);
 			stmt.setInt(5, trainingProgram.getTrainingCode());
 			result = stmt.executeUpdate();
+			myLogger.info("Records updated: "  );
 		} catch (SQLException e) {
-
+			myLogger.error("Exception found  " +e);
 			e.printStackTrace();
 		}
 
@@ -163,7 +178,7 @@ public class DaoCoord implements IDaoCoord {
 			endDate = new java.sql.Date(date2.getTime());
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 		String query = "insert into Training_program values(?,?,?,?,?)";
 		try {
@@ -175,13 +190,15 @@ public class DaoCoord implements IDaoCoord {
 			stmt.setInt(1, trainingProgram.getTrainingCode());
 			result = stmt.executeUpdate();
 			if (result > 0) {
+				myLogger.info("Record Inserted: " );
 				return true;
 			} else
 				return false;
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			myLogger.error("Exception found  " +e);
+			//e.printStackTrace();
 		}
 
 		return false;
@@ -203,9 +220,11 @@ public class DaoCoord implements IDaoCoord {
 			stmt2.executeUpdate();
 			stmt3.executeUpdate();
 			result = stmt.executeUpdate();
+			myLogger.info("Record deleted: " +id);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			myLogger.error("Exception found  " +e);
+			//e.printStackTrace();
 		}
 
 		return result;
@@ -224,15 +243,75 @@ public class DaoCoord implements IDaoCoord {
 
 			x = statement.executeUpdate();
 			// System.out.println("Enrolled Successful ..");
-
+			myLogger.info("Record Inserted: " + x);
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			myLogger.error("Exception found  " +e);
+			//e.printStackTrace();
 
 		}
 
 		return x;
 
+	}
+	ArrayList<FeedbackMaster> feedList= new ArrayList<FeedbackMaster>();
+	@Override
+	public ArrayList<FeedbackMaster> viewFeedback() throws FMSException {
+		FeedbackMaster feedback;
+		feedList.clear();
+		String query = "SELECT * FROM FEEDBACK_MASTER";
+		PreparedStatement stmt;
+		try {
+			stmt = conn.prepareStatement(query);
+		ResultSet rset=stmt.executeQuery();
+		while(rset.next()==true)
+		{   feedback=new FeedbackMaster();
+			feedback.setTraining_Code(rset.getInt(1));
+			feedback.setParticipant_Id(rset.getInt(2));
+			feedback.setFB_Prs_comm(rset.getInt(3));
+			feedback.setFB_Clrfy_dbts(rset.getInt(4));
+			feedback.setFB_TM(rset.getInt(5));
+			feedback.setFB_Hnd_out(rset.getInt(6));
+			feedback.setFB_Hw_Sw_Ntwrk(rset.getInt(7)); 
+			feedback.setComments(rset.getString(8));
+			feedback.setSuggestions(rset.getString(9));
+			feedList.add(feedback);
+			//System.out.println(feedback);
+		}myLogger.info("Feedback report: " );
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			myLogger.error("Exception found  " +e);
+			//e.printStackTrace();
+			throw new FMSException(e.getMessage());
+		}
+		
+		return feedList;
+	}
+	ParticipantEnrollment parti;
+   ArrayList<ParticipantEnrollment> pList=new ArrayList<ParticipantEnrollment>();
+	@Override
+	public ArrayList<ParticipantEnrollment> getAllParticipant() throws FMSException {
+		pList.clear();
+	String qry="SELECT * FROM TRAINING_PARTICIPANT_ENROLLMENT";
+	PreparedStatement stmt;
+	try {
+		stmt = conn.prepareStatement(qry);
+	ResultSet rset=stmt.executeQuery();
+	while(rset.next())
+	{
+		parti=new ParticipantEnrollment();
+		parti.setParticipantId(rset.getInt(1));
+		parti.setTrainingCode(rset.getInt(2));
+		pList.add(parti);
+	}myLogger.info("Participant enrollment: " );
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		myLogger.error("Exception found  " +e);
+		//e.printStackTrace();
+		throw new FMSException(e.getMessage());
+	}
+	
+	
+		return pList;
 	}
 
 }

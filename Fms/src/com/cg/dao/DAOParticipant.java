@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import com.cg.bean.FeedbackMaster;
 import com.cg.util.DBUtil;
 
@@ -13,9 +16,10 @@ public class DAOParticipant implements IDAOParticipant{
 	
 	Connection conn;
 	
-
+	Logger myLogger =  Logger.getLogger(DAOParticipant.class.getName( ));
 	public DAOParticipant() {
 		conn=DBUtil.getConnection();
+		PropertyConfigurator.configure("log4j.properties");
 	}
 
 
@@ -29,16 +33,19 @@ public class DAOParticipant implements IDAOParticipant{
 			PreparedStatement stmt=conn.prepareStatement(query);
 			stmt.setInt(1, id);
 			resultSet=stmt.executeQuery();
-		
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}	if(resultSet==null)
+			if(resultSet.next()==false)
 		{
 			return false;
 		}
-		else return true;
-			
+		else 
+			{myLogger.info("Training code selected: " + id);	
+			return true;
+			}
+		} catch (SQLException e) {
+			myLogger.error("Exception found  " +e); 
+			e.printStackTrace();
+		}
+		return false;
 		
 	}
 	@Override
@@ -65,11 +72,11 @@ public class DAOParticipant implements IDAOParticipant{
 				
 				x=statement.executeUpdate();
 				
-				
+				myLogger.info("Record inserted: " + fm);
 				return x;	
 			
 			} catch (SQLException e) {
-				
+				myLogger.error("Exception found  " +e); 
 				e.printStackTrace();
 				return x;		
 			}

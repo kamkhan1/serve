@@ -33,7 +33,6 @@ public class ParticipantEnrollment {
 }
 	@Override
 	public String toString() {
-		return "paticipantEnrollment [trainingCode=" + trainingCode
-				+ ", participantId=" + participantId + "]";
+		return "         " + trainingCode+ "          "+ participantId ;
 	}
 }

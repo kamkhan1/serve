@@ -4,10 +4,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import com.cg.bean.FeedbackMaster;
 import com.cg.bean.ParticipantEnrollment;
 import com.cg.bean.TrainingProgram;
 import com.cg.dao.DaoCoord;
 import com.cg.dao.IDaoCoord;
+import com.cg.myException.FMSException;
 
 public class ServiceCoord implements IServiceCoord{
 	IDaoCoord dao=new DaoCoord();
@@ -25,9 +27,9 @@ public class ServiceCoord implements IServiceCoord{
 	}
 
 	@Override
-	public void viewFeedback() {
+	public ArrayList<FeedbackMaster> viewFeedback() throws FMSException {
 		
-		
+	return dao.viewFeedback();
 		
 	}
 
@@ -83,5 +85,11 @@ public class ServiceCoord implements IServiceCoord{
 	        }
 	        return true;
 	    }
+
+	@Override
+	public ArrayList<ParticipantEnrollment> getAllParticipant() throws FMSException {
+		// TODO Auto-generated method stub
+		return dao.getAllParticipant();
+	}
 
 }

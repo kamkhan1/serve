@@ -53,9 +53,8 @@ public class EmployeeMaster {
 
     @Override
     public String toString() {
-        return "Employee_Master [Employee_ID=" + Employee_ID
-                + ", EmployeeName=" + EmployeeName + ", Password=" + Password
-                + ", Role=" + Role + "]";
+        return "            " + Employee_ID
+                + "              " + EmployeeName + "               " + Password    + "            " + Role ;
     }
 
     

@@ -17,6 +17,14 @@ public class ServiceParticipant implements IServiceParticipant {
 		
 		return dao.insertFeedback(fm);
 	}
+	@Override
+	public boolean rating(int overall) {
+
+   if(overall>=1&&overall<=5)
+	   return true;
+		return false;
+	}
+	
 	
 
 }

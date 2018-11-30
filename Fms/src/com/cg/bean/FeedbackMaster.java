@@ -84,24 +84,23 @@ public class FeedbackMaster {
     public void setComments(String comments) {
         Comments = comments;
     }
+//
+//    @Override
+//	public String toString() {
+//		return "       Training_Code=" + "         "+ " Participant_Id " +"           " + "FB_Prs_comm"+"          " + "FB_Clrfy_dbts" + "         "+ "FB_TM="+ "          " + "FB_Hnd_out" + "         " + "FB_Hw_Sw_Ntwrk"+ "           " + "Comments" + "                       " + "Suggestions";
+//	}
 
-    public String getSuggestions() {
+	public String getSuggestions() {
         return Suggestions;
     }
 
     public void setSuggestions(String suggestions) {
         Suggestions = suggestions;
     }
-
     @Override
-    public String toString() {
-        return "Feedback_Master [Training_Code=" + Training_Code
-                + ", Participant_Id=" + Participant_Id + ", FB_Prs_comm="
-                + FB_Prs_comm + ", FB_Clrfy_dbts=" + FB_Clrfy_dbts + ", FB_TM="
-                + FB_TM + ", FB_Hnd_out=" + FB_Hnd_out + ", FB_Hw_Sw_Ntwrk="
-                + FB_Hw_Sw_Ntwrk + ", Comments=" + Comments + ", Suggestions="
-                + Suggestions + "]";
-        
+   public String toString() {
+      return "           " + Training_Code+ "                      " + Participant_Id + "                   " + FB_Prs_comm + "                      " + FB_Clrfy_dbts + "                "+ FB_TM + "               " + FB_Hnd_out + "                 " + FB_Hw_Sw_Ntwrk + "                   " + Comments + "                "+ Suggestions + "";
+       
     }
 	
 	

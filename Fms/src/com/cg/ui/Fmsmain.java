@@ -9,6 +9,7 @@ import com.cg.bean.FacultySkill;
 import com.cg.bean.FeedbackMaster;
 import com.cg.bean.ParticipantEnrollment;
 import com.cg.bean.TrainingProgram;
+import com.cg.myException.FMSException;
 import com.cg.service.IService;
 import com.cg.service.IServiceAdmin;
 import com.cg.service.IServiceCoord;
@@ -20,7 +21,7 @@ import com.cg.service.ServiceParticipant;
 
 public class Fmsmain {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FMSException {
 		FeedbackMaster fm = new FeedbackMaster();
 		CourseMaster course;
 		ParticipantEnrollment enroll = new ParticipantEnrollment();
@@ -35,7 +36,7 @@ public class Fmsmain {
 		String cname = "";
 		String date;
 		String date2;
-		int result, fId = 0, tId, id = 0, cId = 0, pId, days = 0;
+		int result, fId = 0, tId = 0, id = 0, cId = 0, pId, days = 0;
 		int choice = 0;
 		int interchoice = 0;
 		int cmaint = 0;
@@ -47,6 +48,7 @@ public class Fmsmain {
 		ArrayList<FacultySkill> fList = new ArrayList<FacultySkill>();
 		ArrayList<EmployeeMaster> eList = new ArrayList<EmployeeMaster>();
 		ArrayList<CourseMaster> cList = new ArrayList<CourseMaster>();
+		ArrayList<ParticipantEnrollment> pList=new ArrayList<ParticipantEnrollment>();
 
 		do {
 			do {
@@ -91,6 +93,8 @@ public class Fmsmain {
 				}
 
 			} while (true);
+			System.out.println();
+			
 			switch (role) {
 			case "admin": {
 				do {
@@ -226,7 +230,10 @@ public class Fmsmain {
 
 							}
 							case 3: {
+								eList.clear();
 								eList = service.showEmployees();
+								System.out.println("       Employee_ID "+"          "+"Employee Name"+"          "+"     Password"+ "            Role");
+								System.out.println("-------------------------------------------------------------------------------------------------------");
 								for (EmployeeMaster employee : eList) {
 									System.out.println(employee);
 								}
@@ -352,8 +359,20 @@ public class Fmsmain {
 
 					}
 					case 3: {
-
+						ArrayList<FeedbackMaster> feedList=new ArrayList<FeedbackMaster>();
+						feedList.clear();
+						feedList=coord.viewFeedback();
+						System.out.println("     Training_Code" + "      "+ " Participant_Id " +"        " + "FB_Prs_comm"+"          " + "FB_Clrfy_dbts" + "         "+ "FB_TM="+ "          " + "FB_Hnd_out" + "         " + "FB_Hw_Sw_Ntwrk"+ "           " + "Comments" + "                     " + "Suggestions");
+						System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+						for(FeedbackMaster feedback: feedList)
+						{
+							System.out.println(feedback);
+						}
+						feedList.clear();
+						break;
 					}
+
+					
 					case 4: {
 						// for(int i=0;i<40;i++)
 						// {System.out.println("\n");}
@@ -647,31 +666,59 @@ public class Fmsmain {
 							System.out.println(obj);
 						}
 						do {
+							do{
 							System.out.println("enter a participant ID");
-							num = kb.next();
-							if (service.checkInt(num) == false) {
-								System.out
-										.println("please input proper participant ID..");
-							} else {
+							do {
+								num = kb.next();
+								if (service.checkInt(num) == false) {
+									System.out
+											.print("\nplease input only number:");
+								} else {
+									pId = Integer.parseInt(num);
+								}
+							} while (service.checkInt(num) == false);
+							
+							
 								pId = Integer.parseInt(num);
 								if (service.validatePID(pId) == false)
 									System.out
 											.println("Participant ID not Exist...");
-								else {
-									System.out.println("Enter Training Code: ");
+							}while(service.validatePID(pId)==false);
+							do {
+								System.out.println("enter training id:");
+								do {
 									num = kb.next();
 									if (service.checkInt(num) == false) {
 										System.out
-												.println("please input proper trianing ID..");
+												.print("\nplease input only number:");
 									} else {
-										tId = Integer.parseInt(num);
-										Boolean b1 = service.validateTID(tId);
-										if (b1 == false) {
-											System.out
-													.println("this training does not exist.");
-										} else {
+										id = Integer.parseInt(num);
+									}
+								} while (service.checkInt(num) == false);
+								
+								b = coord.validate(id);
+								if(b==false)
+								{
+									System.out.println("there is no training with this ID.. try again");
+								}
+							} while (b == false);
+//							       do {								
+//									System.out.println("Enter Training Code: ");
+//									do{num = kb.next();
+//									if (service.checkInt(num) == false) {
+//										System.out
+//												.println("please input proper trianing ID..");
+//									} else {
+//										tId = Integer.parseInt(num);}
+//									}while(service.checkInt(num));
+//										b = service.validateTID(tId);
+//										if (b == false) {
+//											System.out
+//													.println("this training does not exist.");
+//										}}while(service.validateTID(tId)==false);
+										{    //System.out.println();
 											enroll.setParticipantId(pId);
-											enroll.setTrainingCode(tId);
+											enroll.setTrainingCode(id);
 											result = coord
 													.enrollParticipant(enroll);
 											if (result == 0) {
@@ -680,6 +727,14 @@ public class Fmsmain {
 												again = kb.next().trim()
 														.charAt(0);
 											} else {
+												pList=coord.getAllParticipant();
+												System.out
+														.println("       Training Code       "+"participant ID");
+												System.out
+														.println("-----------------------------------------------");
+												for(ParticipantEnrollment parti: pList)
+													System.out
+															.println(parti);
 												System.out
 														.println("Participant enrolled successfully..");
 												System.out
@@ -688,16 +743,27 @@ public class Fmsmain {
 														.charAt(0);
 											}
 
-										}
+										
 
 									}
 
-								}
+								
 							}
-						} while (again =='y' || again == 'Y');
+						 while (again =='y' || again == 'Y');
+						break;
 					}
 					case 3: {
-						coord.viewFeedback();
+						ArrayList<FeedbackMaster> feedList=new ArrayList<FeedbackMaster>();
+						feedList.clear();
+						feedList=coord.viewFeedback();
+						System.out.println("     Training_Code" + "      "+ " Participant_Id " +"        " + "FB_Prs_comm"+"          " + "FB_Clrfy_dbts" + "         "+ "FB_TM="+ "          " + "FB_Hnd_out" + "         " + "FB_Hw_Sw_Ntwrk"+ "           " + "Comments" + "                     " + "Suggestions");
+						System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+						for(FeedbackMaster feedback: feedList)
+						{
+							System.out.println(feedback);
+						}
+						feedList.clear();
+						break;
 					}
 					case 4: {
 						break;
@@ -727,7 +793,16 @@ public class Fmsmain {
 
 						do {
 							System.out.println("enter training code:");
-							id = kb.nextInt();
+							do {
+								num = kb.next();
+								if (service.checkInt(num) == false) {
+									System.out
+											.print("\n please input only number:");
+								} else {
+									id = Integer.parseInt(num);
+								}
+							} while (service.checkInt(num) == false);
+							
 							if (participant.validate(id) == false)
 								System.out
 										.println("please input corrrect training code..");
@@ -739,11 +814,15 @@ public class Fmsmain {
 						do {
 							num = kb.next();
 							if (service.checkInt(num) == false) {
-								System.out.println("please input only number");
+								System.out.println("\n please input only number");
 							} else {
 								overall = Integer.parseInt(num);
+								if(participant.rating(overall)==false)
+								{
+									System.out.println("Rating must be between 1 to 5.");
+								}
 							}
-						} while (service.checkInt(num) == false);
+						} while (service.checkInt(num) == false||participant.rating(overall)==false);
 						System.out.println("2. Number of clarified doubts:");
 						do {
 							num = kb.next();
@@ -753,41 +832,62 @@ public class Fmsmain {
 								cDoubts = Integer.parseInt(num);
 							}
 						} while (service.checkInt(num) == false);
-						System.out.println("3. Rate: were the topics relevent");
+						System.out.println("3. Rate: were the topics relevant");
 
 						do {
 							num = kb.next();
+							//kb.next();
 							if (service.checkInt(num) == false) {
 								System.out.println("please input only number");
 							} else {
 								tRelevent = Integer.parseInt(num);
+								if(participant.rating(tRelevent)==false)
+								{
+									System.out.println("Rating must be between 1 to 5.");
+								}
 							}
-						} while (service.checkInt(num) == false);
+						} while (service.checkInt(num) == false||participant.rating(tRelevent)==false);
 						System.out.println("4. Rate your Hands-on Experience");
 						do {
+							//kb.next();
 							num = kb.next();
-							if (service.checkInt(num) == false) {
-								System.out.println("please input only number");
-							} else {
+							//kb.next();
+							if (service.checkInt(num)== false) {
+								System.out.println("please input only number:");
+							} else
+							{
 								hExp = Integer.parseInt(num);
+								if(participant.rating(hExp)==false)
+								{
+									System.out.println("Rating must be between 1 to 5.");
+								}
 							}
-						} while (service.checkInt(num) == false);
+						} while (service.checkInt(num) == false||participant.rating(hExp)==false);
 						System.out
 								.println("5. Rate: Hardware/Software/Networking");
 						do {
+							//kb.next();
 							num = kb.next();
 							if (service.checkInt(num) == false) {
+								
 								System.out.println("please input only number");
 							} else {
 								rateHSN = Integer.parseInt(num);
+								if(participant.rating(rateHSN)==false)
+								{
+									System.out.println("Rating must be between 1 to 5.");
+								}
 							}
-						} while (service.checkInt(num) == false);
+						} while (service.checkInt(num) == false||participant.rating(rateHSN)==false);
 						System.out
 								.println("6. What are the views you find most valuable about this course?");
-						String comments = kb.next();
+						kb.next();
+						String comments = kb.nextLine();
+						//kb.next();
 						System.out
 								.println("7. What suggestions do you have to improve the course?");
-						String suggest = kb.next();
+						String suggest = kb.nextLine();
+						
 						fm.setComments(comments);
 						fm.setFB_Clrfy_dbts(cDoubts);
 						fm.setFB_Hnd_out(hExp);
@@ -804,7 +904,7 @@ public class Fmsmain {
 							again = kb.next().trim().charAt(0);
 						} else {
 							System.out.println("feedback submitted.");
-							System.out.println("feedback another subject?");
+							System.out.println("feedback another subject?(y/n)");
 							again = kb.next().trim().charAt(0);
 						}
 

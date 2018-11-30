@@ -7,12 +7,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import com.cg.bean.EmployeeMaster;
 import com.cg.bean.FacultySkill;
+import com.cg.myException.FMSException;
 import com.cg.util.DBUtil;
 
 public class DAO implements IDao {
 	Connection conn;
+	Logger myLogger =  Logger.getLogger(DAO.class.getName( ));
 	EmployeeMaster employee;
 	FacultySkill fSkill;
 	ArrayList<FacultySkill> list = new ArrayList<FacultySkill>();
@@ -22,7 +27,7 @@ public class DAO implements IDao {
 	public DAO() {
 
 		conn = DBUtil.getConnection();
-
+		PropertyConfigurator.configure("log4j.properties");
 	}
 
 	@Override
@@ -35,7 +40,7 @@ public class DAO implements IDao {
 			ResultSet rSet = statement.executeQuery();
 			if (rSet.next() == false) {
 				return ("invalid Employee id or password \n try again");
-			} else {
+			} else {	myLogger.info("Validated: " +eid + pass); 
 				if (rSet.getString(4).equalsIgnoreCase("admin")) {
 					return "admin";
 				} else if (rSet.getString(4).equalsIgnoreCase("coordinator")) {
@@ -49,7 +54,8 @@ public class DAO implements IDao {
 			}
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			myLogger.error("Exception found  " +e); 
+			
 		}
 		return null;
 	}
@@ -64,18 +70,24 @@ public class DAO implements IDao {
 			stmt.setInt(1, pId);
 			resultSet = stmt.executeQuery();
 
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-		if (resultSet == null) {
+				if (resultSet.next() == false) {
 			return false;
 		} else
+		{myLogger.info("EmployeeID Validated " + pId );
 			return true;
-	}
+		}
+		} catch (SQLException e) {
+
+			myLogger.error("Exception found  " +e); 
+			//e.printStackTrace();
+		}
+		return false;
+
+		}
+		
 
 	@Override
-	public Boolean validateTID(int tId) {
+	public Boolean validateTID(int tId) throws FMSException {
 		String query = "Select training_code from training_program where training_code=?";
 		ResultSet resultSet = null;
 		try {
@@ -83,17 +95,23 @@ public class DAO implements IDao {
 			stmt.setInt(1, tId);
 			resultSet = stmt.executeQuery();
 
-		} catch (SQLException e) {
 
-			e.printStackTrace();
-		}
-		if (resultSet == null) {
+		if (resultSet.next() == false) {
 			return false;
 		} else
+		{myLogger.info("TrainingCode Validated " + tId );
 			return true;
-	}
+	
+		}		} catch (SQLException e) {
 
-	public ArrayList<FacultySkill> showSkill() {
+			myLogger.error("Exception found  " +e); 
+			//e.printStackTrace();
+			throw new FMSException(e.getMessage());
+		}
+		
+		}
+
+	public ArrayList<FacultySkill> showSkill() throws FMSException {
 		String query = "select * from FACULTY_SKILL";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
@@ -104,16 +122,18 @@ public class DAO implements IDao {
 				fSkill = new FacultySkill(fId, skill);
 				list.add(fSkill);
 			}
+			 myLogger.info("Show Faculty Skill: " );
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			myLogger.error("Exception found  " +e); 
+			//e.printStackTrace();
+			throw new FMSException(e.getMessage());
 		}
 
 		return list;
 	}
 
 	@Override
-	public Boolean validateFID(int fId) {
+	public Boolean validateFID(int fId) throws FMSException {
 
 		String query = "select Employee_ID from Employee_master where Employee_ID=? and Role='Faculty'";
 		ResultSet resultSet = null;
@@ -125,16 +145,19 @@ public class DAO implements IDao {
 		
 		if (resultSet.next() == false) {
 			return false;
-		} else
-			return true;
+		} else{
+			myLogger.info("EmployeeID Validated " + fId );
+			return true;}
 		} catch (SQLException e) {
 
-			e.printStackTrace();
-		}return null;
+			myLogger.error("Exception found  " +e); 
+			//e.printStackTrace();
+			throw new FMSException(e.getMessage());
+		}
 	}
 
 	@Override
-	public ArrayList<EmployeeMaster> showEmployees() {
+	public ArrayList<EmployeeMaster> showEmployees() throws FMSException {
 		String query = "SELECT * FROM EMPLOYEE_MASTER";
 		PreparedStatement stmt;
 		try {
@@ -148,16 +171,18 @@ public class DAO implements IDao {
 				String role = result.getString(4);
 				employee = new EmployeeMaster(eid, name, pass, role);
 				eList.add(employee);
-			}
+			} myLogger.info("Show Employee: " );
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			myLogger.error("Exception found  " +e); 
+			//e.printStackTrace();
+			throw new FMSException(e.getMessage());
 		}
 		return eList;
 	}
 
 	@Override
-	public Boolean validateCID(int cId) {
+	public Boolean validateCID(int cId) throws FMSException {
 		String query = "select Course_ID from Course_master where Course_ID=?";
 		ResultSet resultSet = null;
 		try {
@@ -166,14 +191,15 @@ public class DAO implements IDao {
 			resultSet = stmt.executeQuery();
 			if (resultSet.next() == false) {
 				return false;
-			} else
-				return true;
+			} else{
+				myLogger.info("CourseID Validated " + cId );
+				return true;}
 
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			myLogger.error("Exception found  " +e); 
+			//e.printStackTrace();
+			throw new FMSException(e.getMessage());
 		}
-		return null;
 	}
 
 	// @Override
