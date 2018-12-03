@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.cg.bean.FeedbackMaster;
 import com.cg.bean.ParticipantEnrollment;
+import com.cg.bean.ParticipantStrength;
 import com.cg.bean.TrainingProgram;
 import com.cg.dao.DaoCoord;
 import com.cg.dao.IDaoCoord;
@@ -52,14 +53,14 @@ public class ServiceCoord implements IServiceCoord{
 	}
 
 	@Override
-	public int updateProgram(TrainingProgram trainingProgram) {
+	public int updateProgram(TrainingProgram trainingProgram,int days) {
 		
-		return dao.updateProgram(trainingProgram);
+		return dao.updateProgram(trainingProgram,days);
 	}
 
 	@Override
-	public Boolean addProgram(TrainingProgram trainingProgram) {
-		return dao.addProgram(trainingProgram);
+	public Boolean addProgram(TrainingProgram trainingProgram,int days) {
+		return dao.addProgram(trainingProgram,days);
 		
 	}
 
@@ -90,6 +91,18 @@ public class ServiceCoord implements IServiceCoord{
 	public ArrayList<ParticipantEnrollment> getAllParticipant() throws FMSException {
 		// TODO Auto-generated method stub
 		return dao.getAllParticipant();
+	}
+
+	@Override
+	public int getDays(int cId) {
+		// TODO Auto-generated method stub
+		return dao.getDays(cId);
+	}
+
+	@Override
+	public ArrayList<ParticipantStrength> getParticipantsCount() {
+		
+		return dao.getParticipantsCount();
 	}
 
 }

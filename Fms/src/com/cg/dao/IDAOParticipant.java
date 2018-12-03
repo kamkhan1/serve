@@ -5,4 +5,5 @@ import com.cg.bean.FeedbackMaster;
 public interface IDAOParticipant {
 	Boolean validate(int id);
 	int insertFeedback(FeedbackMaster fm);
+	Boolean verifyTid(int id, int eid);
 }

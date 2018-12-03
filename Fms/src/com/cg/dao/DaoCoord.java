@@ -7,12 +7,14 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.cg.bean.FeedbackMaster;
 import com.cg.bean.ParticipantEnrollment;
+import com.cg.bean.ParticipantStrength;
 import com.cg.bean.TrainingProgram;
 import com.cg.myException.FMSException;
 import com.cg.util.DBUtil;
@@ -123,9 +125,9 @@ public class DaoCoord implements IDaoCoord {
 		}
 		return false;
 	}
-
+	Calendar c=Calendar.getInstance();
 	@Override
-	public int updateProgram(TrainingProgram trainingProgram) {
+	public int updateProgram(TrainingProgram trainingProgram,int days) {
 		java.sql.Date startDate = null;
 		int result = 0;
 		java.util.Date date2;
@@ -136,8 +138,11 @@ public class DaoCoord implements IDaoCoord {
 			date = sdf1.parse(trainingProgram.getStartdate());
 
 			startDate = new java.sql.Date(date.getTime());
-			date2 = sdf1.parse(trainingProgram.getEndDate());
-			endDate = new java.sql.Date(date2.getTime());
+			c.setTime(date);
+			c.add(Calendar.DAY_OF_MONTH,days);
+			String end=sdf1.format(c.getTime());
+			java.util.Date endm=sdf1.parse(end);
+			endDate = new java.sql.Date(endm.getTime());
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			//e1.printStackTrace();
@@ -163,7 +168,7 @@ public class DaoCoord implements IDaoCoord {
 
 	@Override
 	// ADDING NEW TRAINING PROGRAM
-	public Boolean addProgram(TrainingProgram trainingProgram) {
+	public Boolean addProgram(TrainingProgram trainingProgram,int days) {
 		java.sql.Date startDate = null;
 		int result = 0;
 		java.util.Date date2;
@@ -174,8 +179,11 @@ public class DaoCoord implements IDaoCoord {
 			date = sdf1.parse(trainingProgram.getStartdate());
 
 			startDate = new java.sql.Date(date.getTime());
-			date2 = sdf1.parse(trainingProgram.getEndDate());
-			endDate = new java.sql.Date(date2.getTime());
+			c.setTime(date);
+			c.add(Calendar.DAY_OF_MONTH,days);
+			String end=sdf1.format(c.getTime());
+			java.util.Date endm=sdf1.parse(end);
+			endDate = new java.sql.Date(endm.getTime());
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			//e1.printStackTrace();
@@ -312,6 +320,51 @@ public class DaoCoord implements IDaoCoord {
 	
 	
 		return pList;
+	}
+
+	@Override
+	public int getDays(int cId) {
+		int day=0;
+		String qry="Select * from COURSE_MASTER where Course_Id=?";
+		try {
+			PreparedStatement stmt=conn.prepareStatement(qry);
+			stmt.setInt(1, cId);
+			ResultSet res=stmt.executeQuery();
+			if(res.next())
+			{
+				day=res.getInt(3);
+			}
+		} catch (SQLException e) {
+			
+			//e.printStackTrace();
+		}
+		
+		return day;
+	}
+ArrayList<ParticipantStrength> count= new ArrayList<ParticipantStrength>();
+ParticipantStrength part;
+	@Override
+	public ArrayList<ParticipantStrength> getParticipantsCount() {
+		String query=" Select Training_Code,Count(Participant_Id) as PARTICIPANTS_STRENGTH from TRAINING_PARTICIPANT_ENROLLMENT group by TRAINING_Code";
+		
+		count.clear();
+		PreparedStatement stmt;
+		try {
+			stmt = conn.prepareStatement(query);
+			ResultSet res=stmt.executeQuery(query);
+			while(res.next())
+			{
+				int tID=res.getInt(1);
+				int num=res.getInt(2);
+				part=new ParticipantStrength(tID, num);
+				count.add(part);
+			}
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+		}
+		
+		return count;
 	}
 
 }

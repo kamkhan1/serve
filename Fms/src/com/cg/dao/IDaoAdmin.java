@@ -34,6 +34,8 @@ public interface IDaoAdmin {
 	 */
 	int updateCourse(CourseMaster course);
 
+	String getOldSkill(int fId);
+
 	
 
 }

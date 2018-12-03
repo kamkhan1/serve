@@ -92,6 +92,27 @@ public class DaoAdmin implements IDaoAdmin{
        return result;
    }
 
+@Override
+public String getOldSkill(int fId) {
+	String query="Select * from FACULTY_SKILL where Faculty_Id=?";
+	String old;		
+	try {
+				PreparedStatement stmt=conn.prepareStatement(query);
+				stmt.setInt(1, fId);
+				ResultSet res=stmt.executeQuery();
+				if(res.next())
+				{
+					 old = res.getString(2);
+					return old;
+				}
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
+			}
+			
+	return null;
+}
+
 
 	
 

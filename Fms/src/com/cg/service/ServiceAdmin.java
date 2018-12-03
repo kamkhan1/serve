@@ -48,5 +48,11 @@ public int updateCourse(CourseMaster course) {
 	return ad.updateCourse(course);
 }
 
+@Override
+public String getOldSkill(int fId) {
+	
+	return ad.getOldSkill(fId);
+}
+
 
 }

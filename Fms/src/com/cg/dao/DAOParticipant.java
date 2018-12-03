@@ -83,4 +83,26 @@ public class DAOParticipant implements IDAOParticipant{
 		}
 
 
+	@Override
+	public Boolean verifyTid(int id,int eid) {
+		String query="Select Training_Code,Participant_Id from TRAINING_PARTICIPANT_ENROLLMENT where Training_Code=? AND Participant_Id=?";
+		PreparedStatement stmt;
+		try {
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, id);
+			stmt.setInt(2, eid);
+			ResultSet res=stmt.executeQuery();
+			if(res.next()==true)
+				return true;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+		return false;
+	}
+
+
 }

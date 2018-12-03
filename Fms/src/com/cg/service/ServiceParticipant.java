@@ -24,6 +24,11 @@ public class ServiceParticipant implements IServiceParticipant {
 	   return true;
 		return false;
 	}
+	@Override
+	public Boolean verifyTid(int id,int eid) {
+		// TODO Auto-generated method stub
+		return dao.verifyTid(id,eid);
+	}
 	
 	
 

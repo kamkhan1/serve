@@ -17,6 +17,8 @@ public interface IServiceAdmin {
 
 	int updateCourse(CourseMaster course);
 
+	String getOldSkill(int fId);
+
 
 
 }
